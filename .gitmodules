@@ -1,0 +1,3 @@
+[submodule "spotify4j-generation/src/main/resources/spotify-web-api"]
+  path = spotify4j-generation/src/main/resources/spotify-web-api
+	url = git@github.com:bfly2000/spotify-web-api

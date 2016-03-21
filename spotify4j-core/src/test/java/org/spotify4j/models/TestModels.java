@@ -1,10 +1,7 @@
 package org.spotify4j.models;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import junit.framework.Assert;
 import org.spotify4j.SpotifyObjectMapper;
 import org.testng.annotations.BeforeTest;
@@ -29,23 +26,28 @@ public class TestModels {
         this.objectMapper = SpotifyObjectMapper.defaultInstance;
     }
 
-    public String loadExample(String name) throws URISyntaxException, IOException {
-        final Path examplePath = Paths.get(TestModels.class.getClassLoader().getResource("")
+    public Path getExample(String name) throws URISyntaxException {
+        return Paths.get(TestModels.class.getClassLoader().getResource("")
                 .toURI()
                 .resolve("../../../spotify-web-api/specifications/raml/examples/responses/")
                 .resolve(name));
-        return new String(Files.readAllBytes(examplePath));
     }
 
-    public <T> T testSerialization(String exampleFilename, Class<T> clazz) throws IOException, URISyntaxException {
-        final String example = loadExample(exampleFilename);
+    public Path getTestResource(String name) throws URISyntaxException {
+        return Paths.get(TestModels.class.getClassLoader().getResource("")
+                .toURI()
+                .resolve(name));
+    }
+
+    public <T> T testSerialization(Path jsonPath, Class<T> clazz) throws IOException, URISyntaxException {
+        final String example = new String(Files.readAllBytes(jsonPath));
         final T result = objectMapper.readValue(example, clazz);
         Assert.assertNotNull(result);
         return result;
     }
 
-    public <T> T testSerialization(String exampleFilename, TypeReference<T> typeReference) throws IOException, URISyntaxException {
-        final String example = loadExample(exampleFilename);
+    public <T> T testSerialization(Path jsonPath, TypeReference<T> typeReference) throws IOException, URISyntaxException {
+        final String example = new String(Files.readAllBytes(jsonPath));
         T result = objectMapper.readValue(example, typeReference);
         Assert.assertNotNull(result);
         return result;
@@ -53,23 +55,33 @@ public class TestModels {
 
     @Test
     public void testSerializeGetPlaylistResult() throws IOException, URISyntaxException {
-        final Playlist playlist = testSerialization("get-playlist.json", Playlist.class);
+        final Playlist playlist = testSerialization(getExample("get-playlist.json"), Playlist.class);
         assertNull(playlist.getDescription());
         assertNotNull(playlist.getFollowers());
-        assertEquals(playlist.getFollowers().getTotal(), 0);
+        assertEquals(0, playlist.getFollowers().getTotal());
     }
 
     @Test
     public void testSerializeGetUserPlaylistsResult() throws IOException, URISyntaxException {
-        testSerialization("get-user-playlists.json", new TypeReference<Page<PlaylistSimple>>() {
+        testSerialization(getExample("get-user-playlists.json"), new TypeReference<Page<PlaylistSimple>>() {
         });
     }
 
     @Test
     public void testSerializeGetPlaylistTracks() throws IOException, URISyntaxException {
-        final Page<PlaylistTrack> tracks = testSerialization("get-playlist-tracks.json", new TypeReference<Page<PlaylistTrack>>() {
-        });
+        final Page<PlaylistTrack> tracks = testSerialization(getExample("get-playlist-tracks.json"),
+                new TypeReference<Page<PlaylistTrack>>() {
+                });
         assertNotNull(tracks.getItems());
-        assertEquals(tracks.getItems().size(), 15);
+        assertEquals(15, tracks.getItems().size());
+    }
+
+    @Test
+    public void testSerializationGetUserSwizzelPlaylists() throws URISyntaxException, IOException {
+        final Page<PlaylistSimple> playlists = testSerialization(getTestResource("get-user-playlists-wizzler.json"), new TypeReference<Page<PlaylistSimple>>() {
+        });
+        assertNotNull(playlists.getItems());
+        assertEquals(8, playlists.getItems().size(), 8);
+        assertEquals(8, playlists.getTotal());
     }
 }

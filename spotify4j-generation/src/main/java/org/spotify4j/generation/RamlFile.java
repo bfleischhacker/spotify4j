@@ -118,8 +118,8 @@ public class RamlFile {
         }
 
         final ArrayList<JavaAnnotation> annotations = new ArrayList<>();
-        if (!propertyName.equals(propertyMemberName)) {
-            annotations.add(Annotations.GsonSerializedName(propertyName));
+        if (!propertyMemberName.equals(propertyName)) {
+            annotations.add(Annotations.jacksonJsonProperty(propertyName));
         }
 
         containing.getVariables().add(

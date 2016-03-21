@@ -9,7 +9,7 @@ public class Annotations {
     private static ReferenceType JacksonJsonPropertyAnnotation =
             new ReferenceType("JsonProperty", "com.fasterxml.jackson.annotation");
 
-    public static JavaAnnotation GsonSerializedName(String fieldName) {
+    public static JavaAnnotation jacksonJsonProperty(String fieldName) {
         final ArrayList<String> params = new ArrayList<>();
         params.add("\"" + fieldName + "\"");
         return new JavaAnnotation(JacksonJsonPropertyAnnotation, params);

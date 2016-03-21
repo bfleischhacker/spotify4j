@@ -22,12 +22,12 @@ public class Main {
 
     public static void main(String[] args) throws URISyntaxException, IOException {
         String packagePath = "org.spotify4j.models";
-        final Path objectModelsRoot = Paths.get(Main.class.getClassLoader().getResource("").toURI().resolve("spotify-web-api/specifications/raml/libraries/objectModels"));
-        final Path typesRoot = Paths.get(Main.class.getClassLoader().getResource("").toURI().resolve("spotify-web-api/specifications/raml/types"));
+        final Path objectModelsRoot = Paths.get(Main.class.getClassLoader().getResource("").toURI().resolve("../../../spotify-web-api/specifications/raml/libraries/objectModels"));
+        final Path typesRoot = Paths.get(Main.class.getClassLoader().getResource("").toURI().resolve("../../../spotify-web-api/specifications/raml/types"));
         final Path output = Paths.get("./spotify4j-core/src/main/java/org/spotify4j/models").toAbsolutePath();
         Files.createDirectories(output);
         Set<Path> ignored = Stream.concat(
-                Stream.of("objects.raml", "_page.raml", "_base_page.raml", "_cursor_page.raml").map(objectModelsRoot::resolve),
+                Stream.of("objects.raml", "_page.raml", "_base_page.raml", "_cursor_page.raml", "_external_id.raml", "_external_url.raml").map(objectModelsRoot::resolve),
                 Stream.of("types.raml").map(typesRoot::resolve)
         ).collect(Collectors.toSet());
 

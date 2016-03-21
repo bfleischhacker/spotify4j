@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
  * obtained via the Web API endpoint https://api.spotify.com/v1/me.
  **/
 public class SpotifyUserId {
-    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9]+");
     private final String spotifyUserId;
+    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9]+");
 
     protected SpotifyUserId(String spotifyUserId) {
         this.spotifyUserId = spotifyUserId;

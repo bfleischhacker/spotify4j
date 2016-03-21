@@ -2,34 +2,25 @@ package org.spotify4j.models;
 
 public class Image {
     /**
-     * The source URL of the image.
-     **/
-    private String url;
-    /**
      * The image height in pixels. If unknown: `null` or not returned.
      **/
     private int height;
+    /**
+     * The source URL of the image.
+     **/
+    private String url;
     /**
      * The image width in pixels. If unknown: `null` or not returned.
      **/
     private int width;
 
-    public Image(String url, int height, int width) {
-        this.url = url;
+    public Image(int height, String url, int width) {
         this.height = height;
+        this.url = url;
         this.width = width;
     }
 
     public Image() {
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public Image withUrl(String url) {
-        this.url = url;
-        return this;
     }
 
     public int getHeight() {
@@ -38,6 +29,15 @@ public class Image {
 
     public Image withHeight(int height) {
         this.height = height;
+        return this;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Image withUrl(String url) {
+        this.url = url;
         return this;
     }
 

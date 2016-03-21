@@ -9,15 +9,18 @@ import java.util.List;
  * objects) along with other keys like `next` and `cursors` that can be useful
  * in future calls.
  **/
-public class CursorPage extends BasePage {
+public class CursorPage<T> extends BasePage<T> {
     /**
      * The cursors used to find the next set of items.
      **/
     private Cursor cursors;
 
-    public CursorPage(String href, List<String> items, int limit, int total, String next, Cursor cursors) {
+    public CursorPage(String href, List<T> items, int limit, int total, String next, Cursor cursors) {
         super(href, items, limit, total, next);
         this.cursors = cursors;
+    }
+
+    public CursorPage() {
     }
 
     public Cursor getCursors() {

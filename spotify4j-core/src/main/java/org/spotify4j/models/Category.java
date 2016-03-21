@@ -5,25 +5,34 @@ import java.util.List;
 
 public class Category {
     /**
+     * The name of the category.
+     **/
+    private String name;
+    /**
      * A link to the Web API endpoint returning full details of
      * the category.
      **/
     private String href;
     private SpotifyCategoryId id;
     private List<Image> icons;
-    /**
-     * The name of the category.
-     **/
-    private String name;
 
-    public Category(String href, SpotifyCategoryId id, List<Image> icons, String name) {
+    public Category(String name, String href, SpotifyCategoryId id, List<Image> icons) {
+        this.name = name;
         this.href = href;
         this.id = id;
         this.icons = icons;
-        this.name = name;
     }
 
     public Category() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Category withName(String name) {
+        this.name = name;
+        return this;
     }
 
     public String getHref() {
@@ -50,15 +59,6 @@ public class Category {
 
     public Category withIcons(List<Image> icons) {
         this.icons = icons;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Category withName(String name) {
-        this.name = name;
         return this;
     }
 }

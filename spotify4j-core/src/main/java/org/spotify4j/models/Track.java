@@ -4,6 +4,12 @@ import java.util.List;
 
 
 public class Track extends TrackSimple {
+    private ExternalId externalIds;
+    /**
+     * The album on which the track appears. The album object includes a
+     * link in `href` to full information about the album.
+     **/
+    private AlbumSimple album;
     /**
      * The popularity of the track. The value will be between 0 and 100, with
      * 100 being the most popular.
@@ -22,30 +28,24 @@ public class Track extends TrackSimple {
      * real time.
      **/
     private int popularity;
-    /**
-     * The album on which the track appears. The album object includes a
-     * link in `href` to full information about the album.
-     **/
-    private AlbumSimple album;
-    private ExternalId externalIds;
 
-    public Track(String previewUrl, SpotifyUri uri, String href, SpotifyId id, String type, String name, int durationMs, Boolean isPlayable, ExternalUrl externalUrls, Boolean explicit, List<String> availableMarkets, int trackNumber, TrackLink linkedFrom, int discNumber, List<ArtistSimple> artists, int popularity, AlbumSimple album, ExternalId externalIds) {
-        super(previewUrl, uri, href, id, type, name, durationMs, isPlayable, externalUrls, explicit, availableMarkets, trackNumber, linkedFrom, discNumber, artists);
-        this.popularity = popularity;
-        this.album = album;
+    public Track(Boolean isPlayable, List<String> availableMarkets, Boolean explicit, SpotifyId id, String type, TrackLink linkedFrom, SpotifyUri uri, ExternalUrl externalUrls, String previewUrl, int trackNumber, int durationMs, String href, int discNumber, List<ArtistSimple> artists, String name, ExternalId externalIds, AlbumSimple album, int popularity) {
+        super(isPlayable, availableMarkets, explicit, id, type, linkedFrom, uri, externalUrls, previewUrl, trackNumber, durationMs, href, discNumber, artists, name);
         this.externalIds = externalIds;
+        this.album = album;
+        this.popularity = popularity;
     }
 
     public Track() {
         super();
     }
 
-    public int getPopularity() {
-        return popularity;
+    public ExternalId getExternalIds() {
+        return externalIds;
     }
 
-    public Track withPopularity(int popularity) {
-        this.popularity = popularity;
+    public Track withExternalIds(ExternalId externalIds) {
+        this.externalIds = externalIds;
         return this;
     }
 
@@ -58,12 +58,12 @@ public class Track extends TrackSimple {
         return this;
     }
 
-    public ExternalId getExternalIds() {
-        return externalIds;
+    public int getPopularity() {
+        return popularity;
     }
 
-    public Track withExternalIds(ExternalId externalIds) {
-        this.externalIds = externalIds;
+    public Track withPopularity(int popularity) {
+        this.popularity = popularity;
         return this;
     }
 }

@@ -2,7 +2,11 @@ package org.spotify4j.generation.java;
 
 import org.spotify4j.generation.java.types.Type;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JavaField {
+    private List<JavaAnnotation> annotations;
     private JavaDocComment comment;
     private AccessModifier modifier;
     private boolean isStatic;
@@ -12,6 +16,7 @@ public class JavaField {
     private String assignment;
 
     public JavaField(AccessModifier modifier, boolean isStatic, boolean isFinal, String name, Type type) {
+        this.annotations = new ArrayList<>();
         this.modifier = modifier;
         this.isStatic = isStatic;
         this.isFinal = isFinal;
@@ -60,6 +65,15 @@ public class JavaField {
 
     public JavaField withAssignment(String assignment) {
         this.assignment = assignment;
+        return this;
+    }
+
+    public List<JavaAnnotation> getAnnotations() {
+        return annotations;
+    }
+
+    public JavaField withAnnotations(List<JavaAnnotation> annotations) {
+        this.annotations = annotations;
         return this;
     }
 }

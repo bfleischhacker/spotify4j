@@ -1,6 +1,8 @@
 package org.spotify4j.generation;
 
 import org.spotify4j.generation.java.AccessModifier;
+import org.spotify4j.generation.java.Annotations;
+import org.spotify4j.generation.java.JavaAnnotation;
 import org.spotify4j.generation.java.JavaClass;
 import org.spotify4j.generation.java.JavaDocComment;
 import org.spotify4j.generation.java.JavaEnum;
@@ -69,7 +71,6 @@ public class RamlFile {
 
     protected void parseProperty(String packageName, JavaClass containing, Map.Entry<Object, Object> property) {
         if (property.getKey() instanceof ArrayList) {
-            System.out.println("Encounterd enum type defintion of " + fileName);
             return;
         }
 
@@ -77,19 +78,16 @@ public class RamlFile {
         String propertyMemberName = propertyNameOverrides.getOrDefault(propertyName, propertyName);
         final String typeName;
         final String baseTypeName;
-        final boolean isRequired;
         final JavaDocComment description;
         Type type = null;
 
         if (property.getKey() instanceof String && property.getValue() instanceof String) {
             typeName = (String) property.getValue();
             baseTypeName = typeName.replace("[]", "");
-            isRequired = true;
             description = null;
         } else if (property.getKey() instanceof String && property.getValue() instanceof Map) {
             final Map<String, Object> propertyFields = (Map<String, Object>) property.getValue();
             typeName = (String) propertyFields.get("type");
-            isRequired = (boolean) propertyFields.getOrDefault("required", true);
             description = new JavaDocComment((String) propertyFields.get("description"));
             baseTypeName = typeName.replace("[]", "");
             if (baseTypeName.equals("Page")) {
@@ -119,13 +117,15 @@ public class RamlFile {
             type = JavaTypes.List(type);
         }
 
-        if (!isRequired) {
-            type = JavaTypes.Optional(type);
+        final ArrayList<JavaAnnotation> annotations = new ArrayList<>();
+        if (!propertyName.equals(propertyMemberName)) {
+            annotations.add(Annotations.GsonSerializedName(propertyName));
         }
 
         containing.getVariables().add(
                 new JavaField(AccessModifier.PRIVATE, false, false, Util.snakeToLowerCamelCase(propertyMemberName), type)
-                        .withComment(description));
+                        .withComment(description)
+                        .withAnnotations(annotations));
     }
 
 
@@ -135,6 +135,9 @@ public class RamlFile {
 
     private boolean isEnum() {
         return properties.keySet().stream().findFirst().map(o -> (o instanceof ArrayList)).orElse(false);
+    }
+
+    private void buildCustomStringSerializerDeserializer(JavaClass javaClass) {
     }
 
     private void buildConstructor(JavaClass javaClass) {

@@ -38,6 +38,9 @@ public class BasePage<T> {
         this.next = next;
     }
 
+    public BasePage() {
+    }
+
     public String getHref() {
         return href;
     }

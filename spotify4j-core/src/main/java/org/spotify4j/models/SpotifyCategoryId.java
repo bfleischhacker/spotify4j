@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
  * end of the Spotify URI for the category.
  **/
 public class SpotifyCategoryId {
-    private static final Pattern PATTERN = Pattern.compile("^[A-Za-z0-9]+");
     private final String spotifyCategoryId;
+    private static final Pattern PATTERN = Pattern.compile("^[A-Za-z0-9]+");
 
     protected SpotifyCategoryId(String spotifyCategoryId) {
         this.spotifyCategoryId = spotifyCategoryId;

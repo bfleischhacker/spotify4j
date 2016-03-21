@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
  * information is provided elsewhere in the call.
  **/
 public class SpotifyId {
-    private final String spotifyId;
     private static final Pattern PATTERN = Pattern.compile("^[A-Za-z0-9]+");
+    private final String spotifyId;
 
     protected SpotifyId(String spotifyId) {
         this.spotifyId = spotifyId;

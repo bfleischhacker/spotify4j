@@ -27,18 +27,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.5.4</version>
-        </dependency>
-    </dependencies>
-    <repositories>
-        <repository>
-            <id>Mulesoft Repository</id>
-            <url>https://repository.mulesoft.org/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
 </project>

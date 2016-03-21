@@ -5,39 +5,11 @@ import java.util.List;
 
 public class TrackSimple {
     /**
-     * A URL to a 30 second preview (MP3 format) of the track.
-     **/
-    private String previewUrl;
-    private SpotifyUri uri;
-    /**
-     * A link to the Web API endpoint providing full details of the track.
-     **/
-    private String href;
-    private SpotifyId id;
-    /**
-     * The object type: "track".
-     **/
-    private String type;
-    /**
-     * The name of the track.
-     **/
-    private String name;
-    /**
-     * The track length in milliseconds.
-     **/
-    private int durationMs;
-    /**
      * Part of the response when [Track Relinking](https://developer.spotify.
      * com/web-api/track-relinking-guide/) is applied. If `true`, the track is
      * playable in the given market. Otherwise `false`.
      **/
     private Boolean isPlayable;
-    private ExternalUrl externalUrls;
-    /**
-     * Whether or not the track has explicit lyrics (`true` = yes it does;
-     * `false` = no it does not OR unknown).
-     **/
-    private Boolean explicit;
     /**
      * A list of the countries in which the track can be played, identified by
      * their [ISO 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
@@ -45,10 +17,15 @@ public class TrackSimple {
      **/
     private List<String> availableMarkets;
     /**
-     * The number of the track. If an album has several discs, the track
-     * number is the number on the specified disc.
+     * Whether or not the track has explicit lyrics (`true` = yes it does;
+     * `false` = no it does not OR unknown).
      **/
-    private int trackNumber;
+    private Boolean explicit;
+    private SpotifyId id;
+    /**
+     * The object type: "track".
+     **/
+    private String type;
     /**
      * Part of the response when [Track Relinking](https://developer.spotify.
      * com/web-api/track-relinking-guide/) is applied and is only part of the
@@ -57,58 +34,81 @@ public class TrackSimple {
      * object contains information about the originally requested track.
      **/
     private TrackLink linkedFrom;
+    private SpotifyUri uri;
+    private ExternalUrl externalUrls;
+    /**
+     * A URL to a 30 second preview (MP3 format) of the track.
+     **/
+    private String previewUrl;
+    /**
+     * The number of the track. If an album has several discs, the track
+     * number is the number on the specified disc.
+     **/
+    private int trackNumber;
+    /**
+     * The track length in milliseconds.
+     **/
+    private int durationMs;
+    /**
+     * A link to the Web API endpoint providing full details of the track.
+     **/
+    private String href;
     /**
      * The disc number (usually `1` unless the album consists of more than
      * one disc).
      **/
     private int discNumber;
     private List<ArtistSimple> artists;
+    /**
+     * The name of the track.
+     **/
+    private String name;
 
-    public TrackSimple(String previewUrl, SpotifyUri uri, String href, SpotifyId id, String type, String name, int durationMs, Boolean isPlayable, ExternalUrl externalUrls, Boolean explicit, List<String> availableMarkets, int trackNumber, TrackLink linkedFrom, int discNumber, List<ArtistSimple> artists) {
-        this.previewUrl = previewUrl;
-        this.uri = uri;
-        this.href = href;
+    public TrackSimple(Boolean isPlayable, List<String> availableMarkets, Boolean explicit, SpotifyId id, String type, TrackLink linkedFrom, SpotifyUri uri, ExternalUrl externalUrls, String previewUrl, int trackNumber, int durationMs, String href, int discNumber, List<ArtistSimple> artists, String name) {
+        this.isPlayable = isPlayable;
+        this.availableMarkets = availableMarkets;
+        this.explicit = explicit;
         this.id = id;
         this.type = type;
-        this.name = name;
-        this.durationMs = durationMs;
-        this.isPlayable = isPlayable;
-        this.externalUrls = externalUrls;
-        this.explicit = explicit;
-        this.availableMarkets = availableMarkets;
-        this.trackNumber = trackNumber;
         this.linkedFrom = linkedFrom;
+        this.uri = uri;
+        this.externalUrls = externalUrls;
+        this.previewUrl = previewUrl;
+        this.trackNumber = trackNumber;
+        this.durationMs = durationMs;
+        this.href = href;
         this.discNumber = discNumber;
         this.artists = artists;
+        this.name = name;
     }
 
     public TrackSimple() {
     }
 
-    public String getPreviewUrl() {
-        return previewUrl;
+    public Boolean getIsPlayable() {
+        return isPlayable;
     }
 
-    public TrackSimple withPreviewUrl(String previewUrl) {
-        this.previewUrl = previewUrl;
+    public TrackSimple withIsPlayable(Boolean isPlayable) {
+        this.isPlayable = isPlayable;
         return this;
     }
 
-    public SpotifyUri getUri() {
-        return uri;
+    public List<String> getAvailableMarkets() {
+        return availableMarkets;
     }
 
-    public TrackSimple withUri(SpotifyUri uri) {
-        this.uri = uri;
+    public TrackSimple withAvailableMarkets(List<String> availableMarkets) {
+        this.availableMarkets = availableMarkets;
         return this;
     }
 
-    public String getHref() {
-        return href;
+    public Boolean getExplicit() {
+        return explicit;
     }
 
-    public TrackSimple withHref(String href) {
-        this.href = href;
+    public TrackSimple withExplicit(Boolean explicit) {
+        this.explicit = explicit;
         return this;
     }
 
@@ -130,30 +130,21 @@ public class TrackSimple {
         return this;
     }
 
-    public String getName() {
-        return name;
+    public TrackLink getLinkedFrom() {
+        return linkedFrom;
     }
 
-    public TrackSimple withName(String name) {
-        this.name = name;
+    public TrackSimple withLinkedFrom(TrackLink linkedFrom) {
+        this.linkedFrom = linkedFrom;
         return this;
     }
 
-    public int getDurationMs() {
-        return durationMs;
+    public SpotifyUri getUri() {
+        return uri;
     }
 
-    public TrackSimple withDurationMs(int durationMs) {
-        this.durationMs = durationMs;
-        return this;
-    }
-
-    public Boolean getIsPlayable() {
-        return isPlayable;
-    }
-
-    public TrackSimple withIsPlayable(Boolean isPlayable) {
-        this.isPlayable = isPlayable;
+    public TrackSimple withUri(SpotifyUri uri) {
+        this.uri = uri;
         return this;
     }
 
@@ -166,21 +157,12 @@ public class TrackSimple {
         return this;
     }
 
-    public Boolean getExplicit() {
-        return explicit;
+    public String getPreviewUrl() {
+        return previewUrl;
     }
 
-    public TrackSimple withExplicit(Boolean explicit) {
-        this.explicit = explicit;
-        return this;
-    }
-
-    public List<String> getAvailableMarkets() {
-        return availableMarkets;
-    }
-
-    public TrackSimple withAvailableMarkets(List<String> availableMarkets) {
-        this.availableMarkets = availableMarkets;
+    public TrackSimple withPreviewUrl(String previewUrl) {
+        this.previewUrl = previewUrl;
         return this;
     }
 
@@ -193,12 +175,21 @@ public class TrackSimple {
         return this;
     }
 
-    public TrackLink getLinkedFrom() {
-        return linkedFrom;
+    public int getDurationMs() {
+        return durationMs;
     }
 
-    public TrackSimple withLinkedFrom(TrackLink linkedFrom) {
-        this.linkedFrom = linkedFrom;
+    public TrackSimple withDurationMs(int durationMs) {
+        this.durationMs = durationMs;
+        return this;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public TrackSimple withHref(String href) {
+        this.href = href;
         return this;
     }
 
@@ -217,6 +208,15 @@ public class TrackSimple {
 
     public TrackSimple withArtists(List<ArtistSimple> artists) {
         this.artists = artists;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public TrackSimple withName(String name) {
+        this.name = name;
         return this;
     }
 }

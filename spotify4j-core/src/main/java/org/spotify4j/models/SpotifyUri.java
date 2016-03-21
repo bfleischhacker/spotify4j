@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
  * the artist's or album's or track's name
  **/
 public class SpotifyUri {
-    private final String spotifyUri;
     private static final Pattern PATTERN = Pattern.compile("^(spotify:)(track|album|artist):[a-zA-Z0-9]+");
+    private final String spotifyUri;
 
     protected SpotifyUri(String spotifyUri) {
         this.spotifyUri = spotifyUri;

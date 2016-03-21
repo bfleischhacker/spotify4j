@@ -26,6 +26,10 @@ public class Page<T> extends BasePage<T> {
         this.previous = previous;
     }
 
+    public Page() {
+        super();
+    }
+
     public int getOffset() {
         return offset;
     }

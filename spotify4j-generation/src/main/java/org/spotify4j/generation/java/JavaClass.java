@@ -41,7 +41,10 @@ public class JavaClass {
         Set<String> packages = new HashSet<>();
         if (variables != null) {
             variables.stream()
-                    .flatMap(v -> Stream.concat(Stream.of(v.getType()), v.getType().getChildren().stream()))
+                    .flatMap(v -> Stream.of(
+                            v.getAnnotations().stream().map(t -> t.type),
+                            Stream.of(v.getType()),
+                            v.getType().getChildren().stream())).flatMap(Function.identity())
                     //filter out our own child enums
                     .filter(tpe -> !enums.stream().filter(e -> e.name.equals(tpe.getName())).findAny().isPresent())
                     .filter(t -> t.getPackage() != null && !t.getPackage().isEmpty())
@@ -74,6 +77,9 @@ public class JavaClass {
             for (JavaField variable : variables) {
                 if (variable.getComment() != null) {
                     variable.getComment().write(lineWriter);
+                }
+                for (JavaAnnotation javaAnnotation : variable.getAnnotations()) {
+                    lineWriter.writeLine(javaAnnotation.getDeclaration());
                 }
                 lineWriter.writeLine(variable.getDeclaration());
             }
